@@ -6,7 +6,10 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="{{ asset('css/style.css')}}" rel="stylesheet"> 
+        <link href="{{ asset('css/style.css')}}" rel="stylesheet">
+        
+        
+        
         {% endblock %}
         {% block javascripts %}
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -26,13 +29,15 @@
                         <div class="col-lg-5 col-md-4 my-auto">
                             <ul class="nav nav-fill ">
                                 <li class="nav-item">
-                                    <button class="nav-link active btn-01" href="#">Accueil</button>
+                                    <button class="nav-link active btn-01"> <a href="{{ path('accueil') }}">Accueil </a></button>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link btn-01" href="#">Testez gratuitement !</button>
+                                    {# <button class="nav-link btn-01" href="#">Testez gratuitement !</button> #}
+                                    <a href="{{ path('jeux') }}"><button class="nav-link btn-01">Testez gratuitement !</button></a>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link btn-01" href="#">Découvrez nos offres</button>
+                                    {# <button class="nav-link btn-01" href="#">Découvrez nos offres</button> #}
+                                    <a href="{{ path('offres') }}"><button class="nav-link btn-01">Découvrez nos offres</button></a>
                                 </li>
                             </ul>
                         </div>
@@ -42,13 +47,19 @@
                         <div class="col-lg-5 col-md-4 my-auto">
                             <ul class="nav justify-content-end nav-fill">
                                 <li class="nav-item">
-                                    <button class="nav-link btn-01" href="#">Inscription</button>
+                                    <a href="{{ path('app_register') }}"><button class="nav-link btn-01">Inscription</button></a>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link btn-01" href="#">Contact</button>
+                                    {# <button class="nav-link btn-01" href="#">Contact</button> #}
+                                    <a href="{{ path('contact') }}"><button class="nav-link btn-01">Contact</button></a>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link btn-01"> <a href="{{ path('app_login') }}">Connexion</a> </button>
+                                    {# <button class=""> <a href="{{ path('app_login') }}">Connexion</a> </button> #}
+                                {% if app.user %}
+                                    <a href="{{ path('app_logout') }}"><button class="nav-link btn-01">Déconnexion</button></a>
+                                {% else %}
+                                    <a href="{{ path('app_login') }}"><button class="nav-link btn-01" type="submit">Connexion</button></a>
+                                {% endif %}
                                 </li>
                             </ul>
                         </div>

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offres{% endblock %}
+
+{% block body %}
+
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+
+    <div class="corpsbg">
+        <div class="container">
+            <div class="row">
+                <div class="card text-center col-6" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Tests</h5>
+                        <p class="card-text">Achat de Test, 1, 10, 50 tests (cocher des cases pour faire le choix)</p>
+                        <a href="#" class="btn btn-primary">Acheter</a>
+                    </div>
+                </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Abonnement</h5>
+                        <p class="card-text">Abonnement 1, 6, 12 mois (cocher des cases pour faire le choix)</p>
+                        <a href="#" class="btn btn-primary">Acheter</a>
+                    </div>
+                </div>
+            </div> {# fin row #} 
+        </div> {# fin container #}
+    </div> {# fin div corpsbg #}
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %}
+
+{% endblock %}

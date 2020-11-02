@@ -102,7 +102,7 @@ a {
  padding:32px 0
 }
 .mini-footer p {
- margin:0;
+ margin:0%;
  line-height:26px;
  font-size:15px;
  color:#999
@@ -299,10 +299,16 @@ button:hover:after {
 }
 
   /*background */
-#corps {
+.corpsbg {
 background-image: url(../image/wpbg.png);
 background-repeat: no-repeat;
 background-attachment: fixed;
 background-size: cover; 
 height: 100%;
 } 
+
+/* formulaire inscription */
+
+.h1Form {
+    color: #5867dd;
+}

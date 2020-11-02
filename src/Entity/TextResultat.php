@@ -15,12 +15,7 @@ class TextResultat
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $idTextResultat;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $niveau;
+    private $id;
 
     /**
      * @ORM\Column(type="text")
@@ -37,22 +32,29 @@ class TextResultat
      */
     private $resume;
 
-    public function getIdTextResultat(): ?int
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="textResultats")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Module::class, inversedBy="textResultats")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $module;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="textResultats")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $niveau;
+
+    public function getId(): ?int
     {
-        return $this->idTextResultat;
+        return $this->id;
     }
 
-    public function getNiveau(): ?int
-    {
-        return $this->niveau;
-    }
-
-    public function setNiveau(int $niveau): self
-    {
-        $this->niveau = $niveau;
-
-        return $this;
-    }
 
     public function getText(): ?string
     {
@@ -86,6 +88,42 @@ class TextResultat
     public function setResume(string $resume): self
     {
         $this->resume = $resume;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getModule(): ?Module
+    {
+        return $this->module;
+    }
+
+    public function setModule(?Module $module): self
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    public function getNiveau(): ?Niveau
+    {
+        return $this->niveau;
+    }
+
+    public function setNiveau(?Niveau $niveau): self
+    {
+        $this->niveau = $niveau;
 
         return $this;
     }

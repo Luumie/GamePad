@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,12 +15,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    public function __construct(){
+
+        $this->createDate = new \DateTime('now');
+        $this->achats = new ArrayCollection();
+        $this->passeModules = new ArrayCollection();
+        $this->textResultats = new ArrayCollection();
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $idUser;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -77,13 +87,28 @@ class User implements UserInterface
     private $internet;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createDate;
 
-    public function getIdUser(): ?int
+    /**
+     * @ORM\OneToMany(targetEntity=Achat::class, mappedBy="user")
+     */
+    private $achats;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PasseModule::class, mappedBy="user")
+     */
+    private $passeModules;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TextResultat::class, mappedBy="user")
+     */
+    private $textResultats;
+
+    public function getId(): ?int
     {
-        return $this->idUser;
+        return $this->id;
     }
 
     public function getEmail(): ?string
@@ -259,6 +284,106 @@ class User implements UserInterface
     {
         $this->createDate = $createDate;
 
+        return $this; 
+        
+    }
+
+    /**
+     * @return Collection|Achat[]
+     */
+    public function getAchats(): Collection
+    {
+        return $this->achats;
+    }
+
+    public function addAchat(Achat $achat): self
+    {
+        if (!$this->achats->contains($achat)) {
+            $this->achats[] = $achat;
+            $achat->setUser($this);
+        }
+
         return $this;
     }
+
+    public function removeAchat(Achat $achat): self
+    {
+        if ($this->achats->contains($achat)) {
+            $this->achats->removeElement($achat);
+            // set the owning side to null (unless already changed)
+            if ($achat->getUser() === $this) {
+                $achat->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PasseModule[]
+     */
+    public function getPasseModules(): Collection
+    {
+        return $this->passeModules;
+    }
+
+    public function addPasseModule(PasseModule $passeModule): self
+    {
+        if (!$this->passeModules->contains($passeModule)) {
+            $this->passeModules[] = $passeModule;
+            $passeModule->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePasseModule(PasseModule $passeModule): self
+    {
+        if ($this->passeModules->contains($passeModule)) {
+            $this->passeModules->removeElement($passeModule);
+            // set the owning side to null (unless already changed)
+            if ($passeModule->getUser() === $this) {
+                $passeModule->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TextResultat[]
+     */
+    public function getTextResultats(): Collection
+    {
+        return $this->textResultats;
+    }
+
+    public function addTextResultat(TextResultat $textResultat): self
+    {
+        if (!$this->textResultats->contains($textResultat)) {
+            $this->textResultats[] = $textResultat;
+            $textResultat->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTextResultat(TextResultat $textResultat): self
+    {
+        if ($this->textResultats->contains($textResultat)) {
+            $this->textResultats->removeElement($textResultat);
+            // set the owning side to null (unless already changed)
+            if ($textResultat->getUser() === $this) {
+                $textResultat->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+       
+        return (string) $this->getUsername();
+    }
 }
+

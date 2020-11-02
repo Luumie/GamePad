@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserTestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +17,7 @@ class UserTest
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $idUserTest;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -27,9 +29,19 @@ class UserTest
      */
     private $nom;
 
-    public function getIdUserTest(): ?int
+    /**
+     * @ORM\OneToMany(targetEntity=PasseModule::class, mappedBy="userTest")
+     */
+    private $passeModules;
+
+    public function __construct()
     {
-        return $this->idUserTest;
+        $this->passeModules = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getPrenom(): ?string
@@ -52,6 +64,37 @@ class UserTest
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PasseModule[]
+     */
+    public function getPasseModules(): Collection
+    {
+        return $this->passeModules;
+    }
+
+    public function addPasseModule(PasseModule $passeModule): self
+    {
+        if (!$this->passeModules->contains($passeModule)) {
+            $this->passeModules[] = $passeModule;
+            $passeModule->setUserTest($this);
+        }
+
+        return $this;
+    }
+
+    public function removePasseModule(PasseModule $passeModule): self
+    {
+        if ($this->passeModules->contains($passeModule)) {
+            $this->passeModules->removeElement($passeModule);
+            // set the owning side to null (unless already changed)
+            if ($passeModule->getUserTest() === $this) {
+                $passeModule->setUserTest(null);
+            }
+        }
 
         return $this;
     }

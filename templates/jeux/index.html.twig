@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeux{% endblock %}
+
+{% block body %}
+
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+
+    <div class="corpsbg">
+        <div class="container">
+            TESTEZ GRATUITEMENT
+
+
+            Connectez-vous pour accéder à notre catalogue de jeux !
+        </div> {# fin container #}
+    </div> {# fin div corpsbg #}
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %} 
+
+{% endblock %}

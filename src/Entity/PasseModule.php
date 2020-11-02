@@ -15,7 +15,7 @@ class PasseModule
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $idPasseModule;
+    private $id;
 
     /**
      * @ORM\Column(type="datetime")
@@ -30,16 +30,35 @@ class PasseModule
     /**
      * @ORM\Column(type="integer")
      */
-    private $resultat;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $erreur;
 
-    public function getIdPasseModule(): ?int
+    /**
+     * @ORM\ManyToOne(targetEntity=UserTest::class, inversedBy="passeModules")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userTest;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="passeModules")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Module::class, inversedBy="passeModules")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $module;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="passeModules")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $resultat;
+
+    public function getId(): ?int
     {
-        return $this->idPasseModule;
+        return $this->id;
     }
 
     public function getDateInscription(): ?\DateTimeInterface
@@ -66,17 +85,6 @@ class PasseModule
         return $this;
     }
 
-    public function getResultat(): ?int
-    {
-        return $this->resultat;
-    }
-
-    public function setResultat(int $resultat): self
-    {
-        $this->resultat = $resultat;
-
-        return $this;
-    }
 
     public function getErreur(): ?int
     {
@@ -86,6 +94,54 @@ class PasseModule
     public function setErreur(int $erreur): self
     {
         $this->erreur = $erreur;
+
+        return $this;
+    }
+
+    public function getUserTest(): ?UserTest
+    {
+        return $this->userTest;
+    }
+
+    public function setUserTest(?UserTest $userTest): self
+    {
+        $this->userTest = $userTest;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getModule(): ?Module
+    {
+        return $this->module;
+    }
+
+    public function setModule(?Module $module): self
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    public function getResultat(): ?Niveau
+    {
+        return $this->resultat;
+    }
+
+    public function setResultat(?Niveau $resultat): self
+    {
+        $this->resultat = $resultat;
 
         return $this;
     }

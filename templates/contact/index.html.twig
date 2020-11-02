@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+        <div class="corpsbg">
+            <br>
+            <div class="container">
+            <br>
+                <h1 class="h1Form">Contact</h1>
+                <br>
+                {{ form_start(contact) }}
+                
+                {{ form_row(contact.email) }}
+                <br>
+                {{ form_row(contact.name) }}
+                <br>
+                {{ form_row(contact.message) }}
+                <br>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-01">Envoyer</button>
+                </div>
+                {{ form_end(contact) }}
+                <br>
+            </div>
+            <br>
+        </div>
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}
